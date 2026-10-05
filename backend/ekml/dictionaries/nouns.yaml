@@ -1,0 +1,26 @@
+# noun -> keywords that identify it, attribute order for the standard description.
+# Keywords are matched against the *normalized* text (after abbreviation expansion).
+# The noun is a hard gate, so distinct items (stud bolt vs hex bolt, tee vs elbow) need distinct nouns.
+# weak: true marks words that usually describe another item ("flange gasket", "pipe clamp");
+# a weak noun is used only when no other noun is found.
+BOLT:        { keywords: [bolt], order: [thread, length_mm, grade, standard, coating] }
+STUD BOLT:   { keywords: [stud bolt, bolt stud, stud], order: [thread, length_mm, grade, standard, coating] }
+NUT:         { keywords: [nut, hex nut], order: [thread, grade, standard] }
+WASHER:      { keywords: [washer], order: [size_mm, grade, standard] }
+GASKET:      { keywords: [gasket], order: [size_in, rating, grade, standard] }
+FLANGE:      { keywords: [flange], weak: true, order: [size_in, rating, schedule, grade, standard] }
+# SAP masters often write the class word first ("VALVE,GATE,..."), so both word orders are keywords.
+GATE VALVE:  { keywords: [gate valve, valve gate], order: [size_in, rating, grade, standard] }
+BALL VALVE:  { keywords: [ball valve, valve ball], order: [size_in, rating, grade, standard] }
+GLOBE VALVE: { keywords: [globe valve, valve globe], order: [size_in, rating, grade, standard] }
+CHECK VALVE: { keywords: [check valve, valve check, non return valve], order: [size_in, rating, grade, standard] }
+BUTTERFLY VALVE: { keywords: [butterfly valve, valve butterfly], order: [size_in, rating, grade, standard] }
+PIPE:        { keywords: [pipe, tube], weak: true, order: [size_in, schedule, grade, standard] }
+ELBOW:       { keywords: [elbow], order: [size_in, schedule, grade, standard] }
+TEE:         { keywords: [tee, equal tee], order: [size_in, schedule, grade, standard] }
+REDUCER:     { keywords: [reducer], order: [size_in, schedule, grade, standard] }
+BEARING:     { keywords: [bearing], order: [bearing_no, standard] }
+CABLE:       { keywords: [cable], order: [cores, area_sqmm, conductor, voltage, standard] }
+MECHANICAL SEAL: { keywords: [mechanical seal], order: [size_mm, grade, standard] }
+OIL SEAL:    { keywords: [oil seal], order: [size_mm, standard] }
+O-RING:      { keywords: [o-ring, o ring, oring], order: [size_mm, grade, standard] }

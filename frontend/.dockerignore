@@ -1,0 +1,6 @@
+# A node_modules installed on Windows/macOS would overwrite the Linux one inside the image
+# and break native packages (rollup, esbuild, lightningcss) during `npm run build`.
+node_modules
+dist
+playwright-report
+test-results

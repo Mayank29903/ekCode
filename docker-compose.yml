@@ -1,0 +1,68 @@
+name: ekcode
+
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: ekcode
+      POSTGRES_PASSWORD: ekcode
+      POSTGRES_DB: ekcode
+    # Bound to localhost only: the dev password must not be reachable from the LAN.
+    ports: ["127.0.0.1:5432:5432"]
+    volumes: [pgdata:/var/lib/postgresql/data]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ekcode -d ekcode"]
+      interval: 5s
+      retries: 10
+    restart: unless-stopped
+
+  redis:
+    image: redis:7-alpine
+    ports: ["127.0.0.1:6379:6379"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      retries: 10
+    restart: unless-stopped
+
+  api:
+    build: ./backend
+    env_file: .env
+    depends_on:
+      db: { condition: service_healthy }
+      redis: { condition: service_healthy }
+    command: sh -c "python -m app.init_db && exec uvicorn app.main:app --host 0.0.0.0 --port 8000 --proxy-headers --forwarded-allow-ips='*'"
+    ports: ["127.0.0.1:8000:8000"]
+    volumes: [appdata:/data]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/v1/health', timeout=3)"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 60s
+    restart: unless-stopped
+
+  worker:
+    build: ./backend
+    env_file: .env
+    # Waits for a healthy API, which means init_db has created the tables.
+    depends_on:
+      api: { condition: service_healthy }
+    # --with-scheduler runs delayed retries (webhook back-off).
+    command: sh -c 'exec rq worker --with-scheduler --url "$$REDIS_URL" ekcode'
+    volumes: [appdata:/data]
+    restart: unless-stopped
+
+  web:
+    build: ./frontend
+    depends_on: [api]
+    ports: ["8080:80"]
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama
+    profiles: ["llm"]
+    ports: ["127.0.0.1:11434:11434"]
+    volumes: [ollama:/root/.ollama]
+
+volumes: { pgdata: {}, appdata: {}, ollama: {} }

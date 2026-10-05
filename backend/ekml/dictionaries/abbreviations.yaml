@@ -1,0 +1,72 @@
+# token (lowercase) -> expansion. Editable from Settings → Dictionary (stored in DB, this file is the seed).
+ss: stainless steel
+s/s: stainless steel
+cs: carbon steel
+ms: mild steel
+gi: galvanized iron
+hx: hexagonal
+hex: hexagonal
+hd: head
+blt: bolt
+bolts: bolt
+nuts: nut
+wshr: washer
+gskt: gasket
+gkt: gasket
+spwd: spiral wound
+spw: spiral wound
+sw: spiral wound
+flg: flange
+flng: flange
+wn: weld neck
+so: slip on
+rf: raised face
+vlv: valve
+gv: gate valve
+bv: ball valve
+bfv: butterfly valve
+nrv: non return valve
+brg: bearing
+brgs: bearing
+dia: diameter
+lg: length
+len: length
+thk: thickness
+sch: schedule
+smls: seamless
+erw: electric resistance welded
+nb: nominal bore
+od: outer diameter
+id: inner diameter
+qty: quantity
+nos: number
+pcs: number
+ea: number
+mtr: metre
+mtrs: metre
+mm.: mm
+elb: elbow
+lr: long radius
+sr: short radius
+mech: mechanical
+cbl: cable
+xlpe: cross linked polyethylene
+arm: armoured
+cu: copper
+al: aluminium
+# plurals, so "STUDS" and "GASKETS" meet the singular nouns
+studs: stud
+washers: washer
+gaskets: gasket
+flanges: flange
+valves: valve
+bearings: bearing
+cables: cable
+pipes: pipe
+elbows: elbow
+tees: tee
+reducers: reducer
+# finishes
+galv: galvanized
+hdg: hot dip galvanized
+zp: zinc plated

@@ -1,0 +1,22 @@
+# secrets
+.env
+
+# python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+
+# node / vite / playwright
+node_modules/
+dist/
+playwright-report/
+test-results/
+
+# os / editors
+.DS_Store
+Thumbs.db
+*.log

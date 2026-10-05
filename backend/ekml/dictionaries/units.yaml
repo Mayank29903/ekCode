@@ -1,0 +1,34 @@
+# raw unit -> UN/ECE Recommendation 20 code.
+# Keys like "no" must be quoted: YAML 1.1 would otherwise read them as booleans.
+nos: C62
+"no": C62
+number: C62
+ea: C62
+each: C62
+pcs: C62
+pc: C62
+set: SET
+pair: PR
+roll: RO
+kg: KGM
+kgs: KGM
+g: GRM
+gm: GRM
+ton: TNE
+mt: TNE
+m: MTR
+mtr: MTR
+mtrs: MTR
+metre: MTR
+meter: MTR
+mm: MMT
+cm: CMT
+ft: FOT
+sqm: MTK
+m2: MTK
+cum: MTQ
+m3: MTQ
+l: LTR
+ltr: LTR
+ltrs: LTR
+ml: MLT

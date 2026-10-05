@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans Variable", "Inter Variable", ui-sans-serif, sans-serif;
+  --font-mono: "JetBrains Mono Variable", ui-monospace, monospace;
+
+  --color-saffron: #ff9933;
+  --color-indgreen: #138808;
+  --color-navy: #1e3a8a;
+  --color-ok: #16a34a;
+  --color-warn: #d97706;
+  --color-bad: #dc2626;
+
+  --ease-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-drift: drift 38s ease-in-out infinite alternate;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+  --animate-pulse-ring: pulse-ring 2s ease-out infinite;
+
+  @keyframes drift {
+    0% { transform: translate3d(0, 0, 0) scale(1); }
+    50% { transform: translate3d(4%, -3%, 0) scale(1.08); }
+    100% { transform: translate3d(-3%, 4%, 0) scale(1.14); }
+  }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+  @keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 rgb(22 163 74 / 0.55); }
+    100% { box-shadow: 0 0 0 10px rgb(22 163 74 / 0); }
+  }
+}
+
+:root {
+  --bg: #f4f6fb;
+  --fg: #0b1220;
+  --muted: #5b6780;
+  --surface: #ffffff;
+  --line: rgb(15 23 42 / 0.09);
+  --accent: #2451e6;
+  --glass: rgb(255 255 255 / 0.58);
+  --glass-strong: rgb(255 255 255 / 0.86);
+  --glass-border: rgb(255 255 255 / 0.75);
+  --glass-shadow: 0 1px 0 rgb(255 255 255 / 0.6) inset, 0 12px 40px -14px rgb(15 23 42 / 0.22);
+  color-scheme: light;
+}
+.dark {
+  --bg: #060a14;
+  --fg: #e6ebf5;
+  --muted: #93a0b8;
+  --surface: #0d1424;
+  --line: rgb(255 255 255 / 0.08);
+  --accent: #6d8dff;
+  --glass: rgb(15 22 40 / 0.55);
+  --glass-strong: rgb(15 22 40 / 0.85);
+  --glass-border: rgb(255 255 255 / 0.08);
+  --glass-shadow: 0 1px 0 rgb(255 255 255 / 0.05) inset, 0 16px 48px -16px rgb(0 0 0 / 0.7);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+}
+
+@utility glass {
+  background: var(--glass);
+  backdrop-filter: blur(22px) saturate(170%);
+  -webkit-backdrop-filter: blur(22px) saturate(170%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+@utility glass-strong {
+  background: var(--glass-strong);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+@utility text-gradient {
+  background-image: linear-gradient(100deg, var(--color-saffron) 0%, var(--accent) 45%, var(--color-indgreen) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@utility ring-focus {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent) 35%, transparent);
+}
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .glass, .glass-strong { background: var(--glass-strong); }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .glass, .glass-strong { background: var(--surface); backdrop-filter: none; -webkit-backdrop-filter: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}
+
+@layer base {
+  html, body, #root { height: 100%; }
+  body { @apply bg-bg text-fg font-sans antialiased; font-feature-settings: "cv11", "ss01"; }
+  h1, h2, h3 { @apply font-display tracking-tight; }
+  ::selection { background: color-mix(in oklab, var(--accent) 30%, transparent); }
+  :focus-visible { @apply ring-focus; }
+  * { scrollbar-width: thin; scrollbar-color: color-mix(in oklab, var(--fg) 20%, transparent) transparent; }
+}
+
+/* React Flow (knowledge graph) follows the app theme. */
+.react-flow { --xy-background-color: transparent; }
+.react-flow__attribution { background: transparent; }
